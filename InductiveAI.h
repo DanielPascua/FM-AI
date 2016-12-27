@@ -3,8 +3,10 @@
 #include <vector>
 #include <queue>
 #include "PuzzleData.h"
+#include "AIData.h"
 
-class AI
+
+class InductiveAI
 {
 private:
 	/*
@@ -28,6 +30,8 @@ private:
 	std::vector<TestRun> testRuns;
 
 	//Current puzzle theories
+	Theory currentPuzzleTheory;
+
 	void FullTestRunProcessing(TestRun testRun);
 
 	//Active data about the current test run on the puzzle
@@ -38,10 +42,15 @@ private:
 	void ResetActiveData();
 
 public:
-	AI();
-	~AI();
-	Input selectNextInput();
-	void processResult(Input inputSent, DynamicState state);
-	void beginNewPuzzle(VisibleState state);
+	InductiveAI();
+	~InductiveAI();
+
+	Input SelectNextInput();
+	void ProcessResult(Input inputSent, DynamicState state);
+	void BeginNewPuzzle(VisibleState state);
+
+	Theory GetCurrentPuzzleTheory() const { return currentPuzzleTheory; }
+	bool testTheory(); //Returns true when the InductiveAI believes it has found a valid theory for the puzzle
+	void NoSolutionFound(); //Call when DeductiveAI is unable to find a solution when testing the current theory
 };
 

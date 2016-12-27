@@ -1,19 +1,19 @@
 #include <cassert>
-#include "AI.h"
+#include "InductiveAI.h"
 
 using namespace std;
 
 
-AI::AI()
+InductiveAI::InductiveAI()
 {
 }
 
 
-AI::~AI()
+InductiveAI::~InductiveAI()
 {
 }
 
-void AI::ResetActiveData()
+void InductiveAI::ResetActiveData()
 {
 	currentInputList.clear();
 	dynamicStateList.clear();
@@ -21,12 +21,12 @@ void AI::ResetActiveData()
 		nextInput.pop();
 }
 
-void AI::FullTestRunProcessing(TestRun testRun)
+void InductiveAI::FullTestRunProcessing(TestRun testRun)
 {
 	testRuns.push_back(testRun);
 }
 
-Input AI::selectNextInput()
+Input InductiveAI::SelectNextInput()
 {
 	Input result;
 
@@ -46,7 +46,7 @@ Input AI::selectNextInput()
 
 	return result;
 }
-void AI::processResult(Input inputSent, DynamicState state)
+void InductiveAI::ProcessResult(Input inputSent, DynamicState state)
 {
 	if (inputSent == RESET)
 	{
@@ -72,11 +72,23 @@ void AI::processResult(Input inputSent, DynamicState state)
 
 	}
 }
-void AI::beginNewPuzzle(VisibleState state)
+void InductiveAI::BeginNewPuzzle(VisibleState state)
 {
 	//Reset active data
 	ResetActiveData();
 	//Set other puzzle data
 	testRuns.clear();
 	currentPuzzleInitialData = state;
+}
+
+//Returns true when the InductiveAI believes it has found a valid theory for the puzzle
+bool InductiveAI::testTheory()
+{
+	return false;
+}
+
+//Call when DeductiveAI is unable to find a solution when testing the current theory
+void InductiveAI::NoSolutionFound()
+{
+
 }
